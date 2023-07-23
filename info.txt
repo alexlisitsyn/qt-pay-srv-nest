@@ -1,0 +1,6 @@
+-- ESLint: TypeError: this.libOptions.parse is not a function
+Settings (or "Alt + Shift + S")
+Search "eslint"
+Choose "Automatic ESLint configuration"
+Then replace the pattern below with the exist one:
+"**/*.(js|ts|jsx|tsx|html|vue)"
