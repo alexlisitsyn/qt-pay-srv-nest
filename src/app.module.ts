@@ -4,9 +4,9 @@ import { BullModule } from '@nestjs/bull';
 import { ScheduleModule } from '@nestjs/schedule';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { PostModule } from './post/post.module';
-import { AudioModule } from './audio/audio.module';
-import { TasksModule } from './tasks/tasks.module';
+import { PostModule } from './modules/post/post.module';
+import { AudioModule } from './modules/audio/audio.module';
+import { TasksModule } from './modules/tasks/tasks.module';
 
 @Module({
   imports: [
