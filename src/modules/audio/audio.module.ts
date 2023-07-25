@@ -8,6 +8,9 @@ import { AudioProcessor } from './audio.processor';
     BullModule.registerQueue({
       // configKey: 'alternative-config',
       name: 'video',
+      defaultJobOptions: {
+        removeOnComplete: 4
+      }
     }),
   ],
   controllers: [AudioController],
