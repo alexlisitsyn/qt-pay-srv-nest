@@ -4,11 +4,11 @@ import { Queue } from 'bull';
 
 @Controller('audio')
 export class AudioController {
-  constructor(@InjectQueue('audio') private readonly audioQueue: Queue) {}
+  constructor(@InjectQueue('video') private readonly videoQueue: Queue) {}
 
   @Post('transcode')
   async transcode() {
-    await this.audioQueue.add('transcode', {
+    await this.videoQueue.add('transcode', {
       file: 'audio.mp3',
     });
   }

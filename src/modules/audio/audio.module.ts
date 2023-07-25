@@ -6,7 +6,8 @@ import { AudioProcessor } from './audio.processor';
 @Module({
   imports: [
     BullModule.registerQueue({
-      name: 'audio',
+      // configKey: 'alternative-config',
+      name: 'video',
     }),
   ],
   controllers: [AudioController],

@@ -11,7 +11,9 @@ import { TasksModule } from './modules/tasks/tasks.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    BullModule.forRoot({
+    BullModule.forRoot(
+      // 'alternative-config',
+      {
       redis: {
         host: 'localhost',
         port: 6379
