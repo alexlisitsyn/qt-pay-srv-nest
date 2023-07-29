@@ -1,9 +1,17 @@
-import { Module } from '@nestjs/common';
-import { SchedulerController } from './scheduler.controller';
-import { SchedulerService } from './scheduler.service';
+import { Module } from "@nestjs/common";
+import { SchedulerController } from "./scheduler.controller";
+import { SchedulerService } from "./scheduler.service";
+import { ScheduleModule } from "@nestjs/schedule";
 
 @Module({
-  controllers: [SchedulerController],
-  providers: [SchedulerService]
+	imports: [
+		ScheduleModule.forRoot()
+	],
+	controllers: [SchedulerController],
+	providers: [SchedulerService]
 })
-export class SchedulerModule {}
+export class SchedulerModule {
+	constructor() {
+		console.log('>>>');
+	}
+}

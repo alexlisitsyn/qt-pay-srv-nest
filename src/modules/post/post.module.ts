@@ -1,6 +1,6 @@
-import { Module } from '@nestjs/common'
-import { PostController } from './post.controller'
-import { PostService } from './post.service'
+import { Module } from "@nestjs/common";
+import { PostController } from "./post.controller";
+import { PostService } from "./post.service";
 
 @Module({
 	controllers: [PostController],
@@ -8,5 +8,6 @@ import { PostService } from './post.service'
 	exports: [PostService]
 })
 export class PostModule {
-	constructor(private postService: PostService) {}
+	constructor(private postService: PostService) {
+	}
 }
