@@ -102,4 +102,21 @@ export class SchedulerService {
 
 		return res;
 	}
+
+	async initJobsFromDB () {
+		const dbJobs = await this.dbService.getAllData("s_job");
+
+		dbJobs.forEach(dbJob => {
+			const jobName = `job-${dbJob.id}`;
+			const job = new CronJob(`${dbJob.cron_options.seconds} * * * * *`, () => {
+				this.logger.log(`time (${dbJob.cron_options.seconds}) for job task ${jobName} to run!`);
+			});
+
+			this.schedulerRegistry.addCronJob(jobName, job);
+
+			if (dbJob.status !== 'hold')
+				job.start();
+		})
+	}
+
 }

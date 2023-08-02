@@ -8,7 +8,7 @@ export class DbService {
 	private readonly logger = new Logger(DbService.name);
 
 	constructor(@InjectClient() private readonly pool: Pool) {
-		require('pg').types.setTypeParser(1114, function(stringValue) {
+		require("pg").types.setTypeParser(1114, function(stringValue) {
 			return stringValue + "Z";
 		});
 	}
@@ -17,9 +17,20 @@ export class DbService {
 		this.logger.warn(">> findAll ToDo !!");
 	};
 
+	public async getAllData(table: string) {
+		try {
+			const dbRes = await this.pool.query(`select * from "${table}"`)
+			return dbRes?.rows ?? [];
+		} catch (e) {
+			return [];
+		}
+	};
+
 	public async getById(table: string, id: number | string) {
 		return await this.pool.query(
-			`select * from "${table}" where id = $1`,
+			`select *
+       from "${table}"
+       where id = $1`,
 			[id]
 		);
 	};

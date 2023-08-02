@@ -9,7 +9,9 @@ import { CreateJobDto } from "./scheduler.dto";
 	version: "1"
 })
 export class SchedulerController {
-	constructor(private schedulerService: SchedulerService) {
+	constructor(
+		private schedulerService: SchedulerService
+	) {
 	}
 
 	@Put()
