@@ -9,6 +9,7 @@ import { AudioModule } from "./modules/audio/audio.module";
 import { TaskModule } from "./modules/task/task.module";
 import { SchedulerModule } from "./modules/scheduler/scheduler.module";
 import { DbModule } from "./db/db.module";
+import { PayServiceModule } from "./modules/pay-service/pay-service.module";
 
 @Module({
 	imports: [
@@ -35,8 +36,9 @@ import { DbModule } from "./db/db.module";
 		DbModule,
 		SchedulerModule,
 		TaskModule,
+		PayServiceModule,
 		PostModule,
-		AudioModule
+		AudioModule,
 	],
 	controllers: [AppController],
 	providers: [AppService]
