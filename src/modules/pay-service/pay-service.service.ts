@@ -10,12 +10,14 @@ export class PayServiceService {
 	private paySrv = new PayService();
 
 	async initModules() {
-		this.paySrv.use('binance', new BinancePayService())
-		this.paySrv.use('huobi', new HuobiPayService())
+		// ToDo: возможно динамическое подключение, тогда не нужно дополнительных проверок возможности оплаты
+		//  т.е. подключаем модуль, когда есть возможность проведения платежей
+		this.paySrv.use('binance', new BinancePayService());
+		this.paySrv.use('huobi', new HuobiPayService());
 	}
 
-	async tmp1(params: IParams) {
-		this.logger.log('tmp1', params);
+	async getBalance(params: IParams) {
+		this.logger.log('getBalance', params);
 
 		return this.paySrv.getBalance(params.name);
 	}

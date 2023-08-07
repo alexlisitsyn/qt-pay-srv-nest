@@ -10,6 +10,7 @@ import { TaskModule } from "./modules/task/task.module";
 import { SchedulerModule } from "./modules/scheduler/scheduler.module";
 import { DbModule } from "./db/db.module";
 import { PayServiceModule } from "./modules/pay-service/pay-service.module";
+import { DevModule } from "./modules/dev/dev.module";
 
 @Module({
 	imports: [
@@ -37,6 +38,7 @@ import { PayServiceModule } from "./modules/pay-service/pay-service.module";
 		SchedulerModule,
 		TaskModule,
 		PayServiceModule,
+		DevModule,
 		PostModule,
 		AudioModule,
 	],

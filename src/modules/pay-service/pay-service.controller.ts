@@ -18,10 +18,8 @@ export class PayServiceController {
 	) {
 	}
 
-	@Post("tmp1")
-	async tmp1(@Body() params: IParams) {
-
-
-		return this.payServiceService.tmp1(params);
+	@Post("balance")
+	async getBalance(@Body() params: IParams) {
+		return this.payServiceService.getBalance(params);
 	}
 }

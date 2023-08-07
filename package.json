@@ -30,6 +30,7 @@
     "@nestjs/platform-express": "10.0.0",
     "@nestjs/schedule": "3.0.1",
     "@nestjs/swagger": "7.1.2",
+    "bpmn-engine": "^17.1.1",
     "bull": "4.10.4",
     "fs": "0.0.1-security",
     "nest-postgres": "^0.0.8",
