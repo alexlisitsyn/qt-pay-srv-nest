@@ -6,8 +6,12 @@ export class DevService {
 	private readonly logger = new Logger(DevService.name);
 
 	async tmp1(params: any){
+
 		const execRes = await engine.execute((err, execution) => {
-			this.logger.log('Execution completed with id', execution.environment.variables.id);
+			if (err)
+				this.logger.error('Execution completed with error', err);
+			else
+				this.logger.log('Execution completed with id', execution.environment.variables.id);
 		});
 
 		this.logger.log('tmp1 END');

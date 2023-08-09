@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, HttpCode, Post } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { IParams } from "../pay-service/pay-service.controller";
 import { DevService } from "./dev.service";
@@ -15,6 +15,7 @@ export class DevController {
 	}
 
 	@Post("tmp1")
+	@HttpCode(200)
 	async getBalance(@Body() params: IParams) {
 		return this.devService.tmp1(params);
 	}
