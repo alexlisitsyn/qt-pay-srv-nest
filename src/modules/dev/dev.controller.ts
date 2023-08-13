@@ -14,15 +14,9 @@ export class DevController {
 	) {
 	}
 
-	@Post("tmp1")
+	@Post("tmp")
 	@HttpCode(200)
 	async getBalance(@Body() params: IParams) {
-		return this.devService.tmp1(params);
-	}
-
-	@Post("tmp2")
-	@HttpCode(200)
-	async tmp2(@Body() params: IParams) {
-		return this.devService.tmp2(params);
+		return this.devService.tmp3(params);
 	}
 }
