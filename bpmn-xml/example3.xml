@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions
+  id="testProcess"
+  xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+>
+  <process id="theProcess" isExecutable="true">
+    <startEvent id="theStart"/>
+    <serviceTask id="getBalance" implementation="${environment.services.getBalance}" camunda:resultVariable="balance"/>
+    <serviceTask id="transferBalance" implementation="${environment.services.transferBalance}" camunda:resultVariable="transfer"/>
+    <exclusiveGateway id="checkBalance" default="flow3"/>
+    <endEvent id="endSkip"/>
+    <endEvent id="endProcess"/>
+
+    <sequenceFlow id="flow1" sourceRef="theStart" targetRef="getBalance"/>
+    <sequenceFlow id="flow2" sourceRef="getBalance" targetRef="checkBalance"/>
+    <sequenceFlow id="flow3" sourceRef="checkBalance" targetRef="endSkip"/>
+    <sequenceFlow id="flow4" sourceRef="checkBalance" targetRef="transferBalance">
+      <conditionExpression xsi:type="tFormalExpression">${scope.environment.variables.decision}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow5" sourceRef="transferBalance" targetRef="endProcess"/>
+  </process>
+</definitions>

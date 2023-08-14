@@ -1,6 +1,6 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { EventEmitter } from "events";
-import { checkBalance, getBalance } from "./dev.helper";
+import { checkBalance, getBalance, transferBalance } from "./dev.helper";
 import { engine as engine1 } from "../../bpmn/example1";
 import { engine as engine2 } from "../../bpmn/example2";
 import { engine as engine3 } from "../../bpmn/example3";
@@ -54,7 +54,7 @@ export class DevService {
   }
 
   async tmp3(params: any) {
-    this.logger.log("tmp3 params: -----------------------", JSON.stringify(params));
+    console.log("------------tmp3 ----- params:", JSON.stringify(params));
 
     const listener = new EventEmitter();
     listener.on("activity.end", (elementApi) => {
@@ -69,11 +69,13 @@ export class DevService {
       listener,
       variables: {
         balance: params.balance,
+        decision: params.decision,
         apiPath: "https://example.com/test"
       },
       services: {
         getBalance,
-        checkBalance
+        checkBalance,
+        transferBalance
       }
     }, (err, execution) => {
       if (err)
