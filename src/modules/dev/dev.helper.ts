@@ -19,12 +19,13 @@ export async function getBalance(scope, callback) {
 export async function transferBalance(scope, callback) {
   try {
     var result = true;
-    if (scope.environment.output.balance > 5000) {
-      console.log(">>> transferBalance +");
-    } else {
-      console.log(">>> transferBalance -");
-      result = false;
-    }
+    console.log(">>> transferBalance +");
+    // if (scope.environment.output.balance > 5000) {
+    //   console.log(">>> transferBalance +");
+    // } else {
+    //   console.log(">>> transferBalance -");
+    //   result = false;
+    // }
   } catch (err) {
     return callback(null, err);
   }
@@ -32,9 +33,20 @@ export async function transferBalance(scope, callback) {
   return callback(null, result);
 }
 
-export async function checkBalance(balance) {
-  const test = 5000;
-  const res = balance > test;
+// export async function checkBalance(scope, callback) {
+//   try {
+//     var result = scope.environment.output.balance > 5000;
+//
+//     console.log(">>> checkBalance result:", result);
+//   } catch (err) {
+//     return callback(null, err);
+//   }
+//
+//   return callback(null, result);
+// }
+
+export async function checkBalance(balance, test) {
+  const res = balance > test ? 1 : 0;
   console.log(">>> checkBalance balance, test, res:", balance, test, res);
   return res;
 }

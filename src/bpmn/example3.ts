@@ -36,6 +36,9 @@ const {Engine} = require('bpmn-engine');
 //   </process>
 // </definitions>`;
 
+// ${environment.services.isCheck(environment.variables.balance, 5000)}
+
+
 const filePath = path.join(__dirname, '../../bpmn-xml/example3.xml');
 const source = getFileContent(filePath);
 
@@ -51,7 +54,7 @@ export const engine = new Engine({
 				return;
 
 			activity.on('end', ({environment, content}) => {
-				console.log('!!! activity on end:', activity.id);
+				// console.log('!!! activity on end:', activity.id);
 				environment.output[activity.behaviour.resultVariable] = content.output[0];
 				// environment.variables[activity.behaviour.resultVariable] = content.output[0];
 			});

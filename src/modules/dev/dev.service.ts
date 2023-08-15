@@ -69,13 +69,17 @@ export class DevService {
       listener,
       variables: {
         balance: params.balance,
-        decision: params.decision,
         apiPath: "https://example.com/test"
       },
       services: {
         getBalance,
         checkBalance,
-        transferBalance
+        transferBalance,
+        isCheck: (cmp1, cmp2) => {
+          const res = cmp1 > cmp2;
+          console.log('!!! isCheck:', cmp1, cmp2, res);
+          return res;
+        }
       }
     }, (err, execution) => {
       if (err)
