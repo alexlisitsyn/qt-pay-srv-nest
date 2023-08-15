@@ -76,6 +76,7 @@ export class DevService {
         checkBalance,
         transferBalance,
         isCheck: (cmp1, cmp2) => {
+          // const res = cmp1 > cmp2 ? 'run' : 'stop';
           const res = cmp1 > cmp2;
           console.log('!!! isCheck:', cmp1, cmp2, res);
           return res;
