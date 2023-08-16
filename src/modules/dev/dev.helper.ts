@@ -5,10 +5,15 @@
 // }
 
 export async function getBalance(scope, callback) {
+  let result;
+
   try {
+    // clear output
+    scope.environment.output.transfer = undefined;
+
     // var result = await getJson(scope.environment.variables.apiPath); // eslint-disable-line no-var
     // var result = 12405;
-    var result = scope.environment.variables.balance;
+    result = scope.environment.variables.balance;
   } catch (err) {
     return callback(null, err);
   }
@@ -17,15 +22,10 @@ export async function getBalance(scope, callback) {
 }
 
 export async function transferBalance(scope, callback) {
+  let result;
   try {
-    var result = true;
     console.log(">>> transferBalance +");
-    // if (scope.environment.output.balance > 5000) {
-    //   console.log(">>> transferBalance +");
-    // } else {
-    //   console.log(">>> transferBalance -");
-    //   result = false;
-    // }
+    result = true;
   } catch (err) {
     return callback(null, err);
   }
@@ -46,7 +46,8 @@ export async function transferBalance(scope, callback) {
 // }
 
 export async function checkBalance(balance, test) {
-  const res = balance > test ? 1 : 0;
-  console.log(">>> checkBalance balance, test, res:", balance, test, res);
-  return res;
+  // const res = balance > test;
+  // console.log(">>> checkBalance balance, test, res:", balance, test, res);
+  // return res;
+  return balance > test;
 }
