@@ -39,7 +39,7 @@ const {Engine} = require('bpmn-engine');
 // ${environment.services.isCheck(environment.variables.balance, 5000)}
 
 
-const filePath = path.join(__dirname, '../../bpmn-xml/example3.xml');
+const filePath = path.join(__dirname, '../../bpmn-xml/example3.bpmn');
 const source = getFileContent(filePath);
 
 export const engine = new Engine({
