@@ -73,9 +73,8 @@ export class DevService {
       },
       services: {
         getBalance,
-        checkBalance,
         transferBalance,
-        isCheck: (cmp1, cmp2) => {return cmp1 > cmp2;}
+        checkBalance
       }
     }, (err, execution) => {
       if (err)

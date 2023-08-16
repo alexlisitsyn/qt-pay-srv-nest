@@ -33,21 +33,6 @@ export async function transferBalance(scope, callback) {
   return callback(null, result);
 }
 
-// export async function checkBalance(scope, callback) {
-//   try {
-//     var result = scope.environment.output.balance > 5000;
-//
-//     console.log(">>> checkBalance result:", result);
-//   } catch (err) {
-//     return callback(null, err);
-//   }
-//
-//   return callback(null, result);
-// }
-
-export async function checkBalance(balance, test) {
-  // const res = balance > test;
-  // console.log(">>> checkBalance balance, test, res:", balance, test, res);
-  // return res;
-  return balance > test;
+export const checkBalance = (cmp) => {
+  return cmp > 5000;
 }
