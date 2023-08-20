@@ -1,10 +1,14 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { EventEmitter } from "events";
-import { checkBalance, getBalance, transferBalance } from "./dev.helper";
-import { engine as engine1 } from "../../bpmn/example1";
-import { engine as engine2 } from "../../bpmn/example2";
-import { engine as engine3 } from "../../bpmn/example3";
-import { engine as engine4 } from "../../bpmn/example4";
+import { engine as engine1 } from "../../bpmn/examples/example1";
+import { engine as engine2 } from "../../bpmn/examples/example2";
+import { engine as engine3 } from "../../bpmn/examples/example3";
+import { engine as engine4 } from "../../bpmn/examples/example4";
+import bpmnService from "../../bpmn/bpmn-service";
+
+import * as path from "path";
+import { getFileContent } from "../../bpmn/file-helper";
+import { runActivityById, checkBalance } from "../../bpmn/bpmn-activity";
 
 @Injectable()
 export class DevService {
@@ -54,41 +58,6 @@ export class DevService {
   }
 
   async tmp3(params: any) {
-    console.log("------------tmp3 ----- params:", JSON.stringify(params));
-
-    const listener = new EventEmitter();
-    listener.on("activity.end", (elementApi) => {
-      console.log(">>> activity.end elementApi.id:", elementApi.id);
-      if (elementApi.id === "endSkip")
-        this.logger.log("!!! endSkip");
-      if (elementApi.id === "endProcess")
-        this.logger.log("!!! endProcess");
-    });
-
-    const execRes = await engine3.execute({
-      listener,
-      variables: {
-        balance: params.balance,
-        apiPath: "https://example.com/test"
-      },
-      services: {
-        getBalance,
-        transferBalance,
-        checkBalance
-      }
-    }, (err, execution) => {
-      if (err)
-        throw err;
-
-      // console.log("***", execution.name, execution.environment.output);
-      // console.log(">>> Balance:", execution.environment.output.balance);
-    });
-
-    this.logger.log("tmp3 END");
-    return execRes.environment.output;
-  }
-
-  async tmp4(params: any) {
     this.logger.log("tmp4 params:", params);
 
     const listener = new EventEmitter();
@@ -115,4 +84,82 @@ export class DevService {
 
     return execRes.options;
   }
+
+  async tmp(params: any) {
+    console.log("------------tmp3 ----- params:", JSON.stringify(params));
+
+    const listener = new EventEmitter();
+    listener.on("activity.end", (elementApi) => {
+      console.log(">>> activity.end elementApi.id:", elementApi.id);
+      if (elementApi.id === "endSkip")
+        this.logger.log("!!! endSkip");
+      if (elementApi.id === "endProcess")
+        this.logger.log("!!! endProcess");
+    });
+
+    const execRes = await engine3.execute({
+      listener,
+      variables: {
+        balance: params.balance,
+        apiPath: "https://example.com/test"
+      },
+      services: {
+        // getBalance,
+        // transferBalance,
+        checkBalance
+      }
+    }, (err, execution) => {
+      if (err)
+        throw err;
+
+      // console.log("***", execution.name, execution.environment.output);
+      // console.log(">>> Balance:", execution.environment.output.balance);
+    });
+
+    this.logger.log("tmp3 END");
+    return execRes.environment.output;
+  }
+
+  async runAccountBalance(variables: any) {
+    // // ToDo: move to db
+    // const filePath = path.join(__dirname, "../../../bpmn-xml/account-balance.bpmn");
+    // const source = getFileContent(filePath);
+    //
+    // // ToDo: get engine by name or run engine by name
+    // const engine = await bpmnService.getEngine({
+    //   name: "account-balance",
+    //   source
+    // });
+    //
+    // // ToDo: move to listener library and add by parameters
+    // const listener = new EventEmitter();
+    // listener.on("activity.end", (elementApi) => {
+    //   // console.log(">>> activity.end elementApi.id:", elementApi.id);
+    //   if (elementApi.id === "endSkip")
+    //     this.logger.log("!!! endSkip");
+    //   if (elementApi.id === "endProcess")
+    //     this.logger.log("!!! endProcess");
+    // });
+    //
+    // const execOptions = {
+    //   listener,
+    //   variables,
+    //   services: {
+    //     runActivityById,
+    //     checkBalance
+    //   }
+    // };
+    //
+    // const execRes = await bpmnService.execEngine(engine, execOptions);
+    //
+    // this.logger.log("engine account-balance END");
+    //
+    // return execRes.environment.output;
+  }
+
+  async bpmnRun(params: any) {
+    return await bpmnService.execEngineByName(params.name as string, params.variables);
+    // return variables;
+  }
+
 }
