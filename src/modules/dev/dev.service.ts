@@ -159,7 +159,6 @@ export class DevService {
 
   async bpmnRun(params: any) {
     return await bpmnService.execEngineByName(params.name as string, params.variables);
-    // return variables;
   }
 
 }

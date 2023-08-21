@@ -2,8 +2,7 @@ const fs = require('fs');
 
 export function getFileContent (filePath: string) {
 	try {
-		const fileContent = fs.readFileSync(filePath, {encoding: 'utf8'});
-		return fileContent;
+		return fs.readFileSync(filePath, {encoding: 'utf8'});
 	} catch (err) {
 		console.error(err);
 		return '';

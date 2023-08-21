@@ -1,36 +1,16 @@
-interface IActivity {
-  run(params: any);
-}
-
-class GetBalanceActivity implements IActivity {
-  async run(params: any) {
-    console.log(">>> run activity getBalance");
-    if (params?.environment?.output)
-      params.environment.output.transfer = undefined;
-
-    if (params?.environment?.variables)
-      return params.environment.variables.balance;
-
-    return false;
-  }
-}
-
-class TransferBalanceActivity implements IActivity {
-  async run(params: any) {
-    console.log(">>> run activity transferBalance");
-    return true;
-  }
-}
+import {IBpmnActivity} from "../bpmn-interface";
+import {GetBalanceActivity} from "./get-balance-activity";
+import {TransferBalanceActivity} from "./transfer-balance-activity";
 
 class ActivityStarter {
-  activities: Record<string, IActivity> = {};
+  activities: Record<string, IBpmnActivity> = {};
 
   constructor() {
     this.use("getBalance", new GetBalanceActivity());
     this.use("transferBalance", new TransferBalanceActivity());
   }
 
-  use(name: string, activity: IActivity) {
+  use(name: string, activity: IBpmnActivity) {
     this.activities[name] = activity;
   }
 
@@ -45,11 +25,12 @@ class ActivityStarter {
   }
 }
 
-export const checkBalance = (cmp) => {
+// ToDo: сделать в формате runActivityById
+function checkBalance(cmp) {
   return cmp > 5000;
 }
 
-export async function runActivityById(scope, callback) {
+async function runActivityById(scope, callback) {
   let result: any;
 
   try {
@@ -62,7 +43,8 @@ export async function runActivityById(scope, callback) {
   return callback(null, result);
 }
 
-
-
-
-
+export {
+  IBpmnActivity,
+  runActivityById,
+  checkBalance
+}
