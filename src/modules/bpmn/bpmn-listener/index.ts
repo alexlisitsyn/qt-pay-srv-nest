@@ -1,28 +1,35 @@
+import { Injectable, Logger } from "@nestjs/common";
 import { EventEmitter } from "events";
-import {onActivityEnd} from './bpmn-listener';
 
-const availableListeners = {
-	'activity.end': onActivityEnd
-}
+@Injectable()
+export class BpmnListenerHelper {
+	private readonly logger = new Logger(BpmnListenerHelper.name);
 
-// ToDo: refactor to class
-//  add logs
+	onActivityEnd = (elementApi) => {
+		// console.log(">>> activity.end elementApi.id:", elementApi.id);
 
-async function buildListeners(listenersNames: string[]) {
-	if (!Array.isArray(listenersNames) || !listenersNames?.length)
-		return null;
+		if (elementApi.id === "endSkip")
+			this.logger.log("!!! endSkip");
 
-	const listener = new EventEmitter();
-	listenersNames.forEach(listenersName => {
-		const listenerHandler = availableListeners[listenersName]
-		if (listenerHandler)
-			listener.on(listenersName, listenerHandler);
-	});
+		if (elementApi.id === "endProcess")
+			this.logger.log("!!! endProcess");
+	};
 
-	return listener;
-}
+	availableListeners = {
+		'activity.end': this.onActivityEnd
+	}
 
-export {
-	buildListeners,
-	onActivityEnd,
+	async buildListeners(listenersNames: string[]) {
+		if (!Array.isArray(listenersNames) || !listenersNames?.length)
+			return null;
+
+		const listener = new EventEmitter();
+		listenersNames.forEach(listenersName => {
+			const listenerHandler = this.availableListeners[listenersName]
+			if (listenerHandler)
+				listener.on(listenersName, listenerHandler);
+		});
+
+		return listener;
+	}
 }

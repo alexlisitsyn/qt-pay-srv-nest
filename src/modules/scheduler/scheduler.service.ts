@@ -3,12 +3,14 @@ import { SchedulerRegistry } from "@nestjs/schedule";
 import { DbService } from "../../db/db.service";
 import { CreateJobDto } from "./scheduler.dto";
 import { CronJob } from "cron";
+import { BpmnService } from "../bpmn/bpmn.service";
 
 @Injectable()
 export class SchedulerService {
 	constructor(
 		private schedulerRegistry: SchedulerRegistry,
-		private dbService: DbService
+		private dbService: DbService,
+		private bpmnService: BpmnService
 	) {
 	}
 
@@ -106,10 +108,15 @@ export class SchedulerService {
 	async initJobsFromDB () {
 		const dbJobs = await this.dbService.getAllData("s_job");
 
+		this.logger.log(`initJobsFromDB, count: ${dbJobs.length}`);
+
 		dbJobs.forEach(dbJob => {
 			const jobName = `job-${dbJob.id}`;
+
 			const job = new CronJob(`${dbJob.cron_options.seconds} * * * * *`, () => {
 				this.logger.log(`time (${dbJob.cron_options.seconds}) for job task ${jobName} to run!`);
+
+				this.bpmnService.execEngineByName(dbJob.task);
 			});
 
 			this.schedulerRegistry.addCronJob(jobName, job);

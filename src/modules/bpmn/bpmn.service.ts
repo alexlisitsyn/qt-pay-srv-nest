@@ -1,5 +1,4 @@
 import { Injectable, Logger } from "@nestjs/common";
-import { EventEmitter } from "events";
 import * as path from "path";
 import { Engine } from "bpmn-engine";
 
@@ -7,13 +6,15 @@ import { getFileContent } from "../../common/file-helper";
 import { IEngine } from "./bpmn.interface";
 import { BpmnModel } from "./bpmn.model";
 import { checkBalance, runActivityById } from "./bpmn-activity";
-import { buildListeners, onActivityEnd } from "./bpmn-listener";
+import { BpmnListenerHelper } from "./bpmn-listener";
 
 @Injectable()
 export class BpmnService {
 
 	private readonly logger = new Logger(BpmnService.name);
 	private readonly engines: Record<string, IEngine> = {};
+
+	private readonly bpmnListenerHelper = new BpmnListenerHelper();
 
 	constructor(
 		private bpmnModel: BpmnModel,
@@ -87,7 +88,7 @@ export class BpmnService {
 		});
 	}
 
-	async execEngineByName(engineName: string, runtimeVariables: any) {
+	async execEngineByName(engineName: string, runtimeVariables?: any) {
 
 		this.logger.log(`--- BpmnService execEngineByName START: ${engineName}, ${JSON.stringify(runtimeVariables)} `);
 
@@ -100,7 +101,7 @@ export class BpmnService {
 
 		const engine = this.engines[engineName];
 
-		const listener = await buildListeners(engine.listeners);
+		const listener = await this.bpmnListenerHelper.buildListeners(engine.listeners);
 
 		// ToDo: add variables from DB settings
 		const variables: any = {};

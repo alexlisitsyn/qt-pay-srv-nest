@@ -1,8 +1,12 @@
+import { Injectable, Logger } from "@nestjs/common";
 import {IBpmnActivity} from "../bpmn.interface";
 import {GetBalanceActivity} from "./get-balance-activity";
 import {TransferBalanceActivity} from "./transfer-balance-activity";
 
-class ActivityStarter {
+@Injectable()
+class BpmnActivityHelper {
+  private readonly logger = new Logger(BpmnActivityHelper.name);
+
   activities: Record<string, IBpmnActivity> = {};
 
   constructor() {
@@ -16,7 +20,7 @@ class ActivityStarter {
 
   run(name: string, params: any) {
     if (!this.activities[name]) {
-      console.error(`Unknown activity: ${name}`);
+      this.logger.error(`Unknown activity: ${name}`);
       return false;
       // throw new Error(`Unknown activity: ${scope.id}`);  // ToDo
     }
@@ -34,7 +38,7 @@ async function runActivityById(scope, callback) {
   let result: any;
 
   try {
-    const activity = new ActivityStarter();
+    const activity = new BpmnActivityHelper();
     result = await activity.run(scope.id, [scope]);
   } catch (err) {
     return callback(null, err);

@@ -1,8 +1,14 @@
-import {IBpmnActivity} from "../bpmn.interface";
+import { Injectable, Logger } from "@nestjs/common";
+import { IBpmnActivity } from "../bpmn.interface";
 
-export class GetBalanceActivity implements IBpmnActivity {
+@Injectable()
+class GetBalanceActivity implements IBpmnActivity {
+	private readonly logger = new Logger(GetBalanceActivity.name);
+
 	async run(params: any) {
-		console.log(">>> run activity getBalance");
+		console.log("run activity getBalance");
+		// this.logger.log("run activity getBalance");
+
 		if (params?.environment?.output)
 			params.environment.output.transfer = false;
 
@@ -12,3 +18,7 @@ export class GetBalanceActivity implements IBpmnActivity {
 		return false;
 	}
 }
+
+export {
+	GetBalanceActivity
+};
