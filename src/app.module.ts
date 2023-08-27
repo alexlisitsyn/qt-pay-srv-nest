@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { BullModule } from "@nestjs/bull";
-import { PostgresModule } from 'nest-postgres';
+import { PostgresModule } from "nest-postgres";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { PostModule } from "./examples/post/post.module";

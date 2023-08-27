@@ -1,9 +1,11 @@
-import { Module } from '@nestjs/common';
-import { BpmnService } from './bpmn.service';
+import { Global, Module } from "@nestjs/common";
 import { BpmnController } from './bpmn.controller';
+import { BpmnService } from './bpmn.service';
 
+@Global()
 @Module({
+  controllers: [BpmnController],
   providers: [BpmnService],
-  controllers: [BpmnController]
+  exports: [BpmnService]
 })
 export class BpmnModule {}

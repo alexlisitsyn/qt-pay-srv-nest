@@ -1,12 +1,11 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { EventEmitter } from "events";
-import path from "path";
+import * as path from "path";
 import { Engine } from "bpmn-engine";
 
-import { IEngine } from "./bpmn.interface";
-
-import { checkBalance, runActivityById } from "./bpmn-activity";
 import { getFileContent } from "../../common/file-helper";
+import { IEngine } from "./bpmn.interface";
+import { checkBalance, runActivityById } from "./bpmn-activity";
 
 @Injectable()
 export class BpmnService {
@@ -14,18 +13,21 @@ export class BpmnService {
 	private readonly logger = new Logger(BpmnService.name);
 	private readonly engines: Record<string, IEngine> = {};
 
+	constructor() {
+		this.init().then();
+	}
 
 	async init() {
 		if (Object.entries(this.engines).length)
 			return;
 
 		// ToDo: move to DB
-		const filePath = path.join(__dirname, "../../bpmn-xml/account-balance.bpmn");
+		const filePath = path.join(__dirname, "../../../bpmn-xml/account-balance.bpmn");
 		const source = getFileContent(filePath);
 		const engineName = "account-balance";
 		this.engines[engineName] = {
 			name: "account-balance",
-			engine: this.getEngine({name: engineName, source})
+			engine: this.getEngine({ name: engineName, source })
 		};
 	}
 
@@ -43,7 +45,7 @@ export class BpmnService {
 					if (!activity.behaviour.resultVariable)
 						return;
 
-					activity.on("end", ({environment, content}) => {
+					activity.on("end", ({ environment, content }) => {
 						// console.log('!!! activity on end:', activity.id);
 						environment.output[activity.behaviour.resultVariable] = content.output[0];
 						// environment.variables[activity.behaviour.resultVariable] = content.output[0];

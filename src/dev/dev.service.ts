@@ -1,6 +1,6 @@
 import { Injectable, Logger } from "@nestjs/common";
-// import { BpmnService } from "../modules/bpmn/bpmn.service";
-import bpmnService from "../-bpmn-old/bpmn-service";
+import { BpmnService } from "../modules/bpmn/bpmn.service";
+// import bpmnService from "../-bpmn-old/bpmn-service";
 
 // import { EventEmitter } from "events";
 // import { engine as engine3 } from "../-bpmn-old/examples/example3";
@@ -9,7 +9,7 @@ import bpmnService from "../-bpmn-old/bpmn-service";
 @Injectable()
 export class DevService {
   constructor(
-    // private bpmnService: BpmnService
+    private bpmnService: BpmnService
   ) {
   }
 
@@ -51,7 +51,7 @@ export class DevService {
   // }
 
   async bpmnRun(params: any) {
-    return await bpmnService.execEngineByName(params.name as string, params.variables);
+    return await this.bpmnService.execEngineByName(params.name as string, params.variables);
   }
 
 }

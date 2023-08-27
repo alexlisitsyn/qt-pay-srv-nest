@@ -11,9 +11,9 @@ export interface IEngine {
 }
 
 @Injectable()
-export class BpmnService {
+export class BpmnServiceOld {
 
-	private readonly logger = new Logger(BpmnService.name);
+	private readonly logger = new Logger(BpmnServiceOld.name);
 	private readonly engines: Record<string, IEngine> = {};
 
 	constructor() {
@@ -116,4 +116,4 @@ export class BpmnService {
 
 }
 
-export default new BpmnService();
+export default new BpmnServiceOld();
