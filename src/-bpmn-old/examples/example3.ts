@@ -1,4 +1,4 @@
-import {getFileContent} from "../file-helper";
+import {getFileContent} from "../../common/file-helper";
 import * as path from "path";
 
 const {Engine} = require('bpmn-engine');

@@ -1,6 +1,6 @@
 import { Body, Controller, HttpCode, Post } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
-import { IParams } from "../pay-service/pay-service.controller";
+import { IParams } from "../modules/pay-service/pay-service.controller";
 import { DevService } from "./dev.service";
 
 @ApiTags("dev")
@@ -14,17 +14,17 @@ export class DevController {
 	) {
 	}
 
-	@Post("tmp")
-	@HttpCode(200)
-	async runTmp(@Body() params: IParams) {
-		return this.devService.tmp(params);
-	}
-
-	@Post("account-balance")
-	@HttpCode(200)
-	async runAccountBalance(@Body() params: IParams) {
-		return this.devService.runAccountBalance(params);
-	}
+	// @Post("tmp")
+	// @HttpCode(200)
+	// async runTmp(@Body() params: IParams) {
+	// 	return this.devService.tmp(params);
+	// }
+	//
+	// @Post("account-balance")
+	// @HttpCode(200)
+	// async runAccountBalance(@Body() params: IParams) {
+	// 	return this.devService.runAccountBalance(params);
+	// }
 
 	@Post("bpmn-run")
 	@HttpCode(200)

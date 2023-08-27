@@ -5,12 +5,13 @@ import { PostgresModule } from 'nest-postgres';
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { PostModule } from "./modules/post/post.module";
-import { AudioModule } from "./modules/audio/audio.module";
-import { TaskModule } from "./modules/task/task.module";
+import { AudioModule } from "./examples/audio/audio.module";
+import { TaskModule } from "./examples/task/task.module";
 import { SchedulerModule } from "./modules/scheduler/scheduler.module";
 import { DbModule } from "./db/db.module";
 import { PayServiceModule } from "./modules/pay-service/pay-service.module";
-import { DevModule } from "./modules/dev/dev.module";
+import { DevModule } from "./dev/dev.module";
+import { BpmnModule } from "./modules/bpmn/bpmn.module";
 
 @Module({
 	imports: [
@@ -41,6 +42,7 @@ import { DevModule } from "./modules/dev/dev.module";
 		DevModule,
 		PostModule,
 		AudioModule,
+		BpmnModule
 	],
 	controllers: [AppController],
 	providers: [AppService]

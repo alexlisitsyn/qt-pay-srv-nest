@@ -2,7 +2,7 @@ import * as path from "path";
 import {Injectable, Logger} from "@nestjs/common";
 import {Engine} from "bpmn-engine";
 import {EventEmitter} from "events";
-import {getFileContent} from "./file-helper";
+import {getFileContent} from "../common/file-helper";
 import {checkBalance, runActivityById} from "./bpmn-activity";
 
 export interface IEngine {
