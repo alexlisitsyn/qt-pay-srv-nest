@@ -15,7 +15,7 @@ export class DbService {
 		});
 	}
 
-	public async query(query: string, params: any = {}) {
+	public async query(query: string, params: any = []) {
 		try {
 			const dbRes = await this.pool.query(query, params);
 			return dbRes?.rows ?? [];

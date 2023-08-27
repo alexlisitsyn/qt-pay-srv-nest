@@ -6,6 +6,7 @@ import { Engine } from "bpmn-engine";
 import { getFileContent } from "../../common/file-helper";
 import { IEngine } from "./bpmn.interface";
 import { checkBalance, runActivityById } from "./bpmn-activity";
+import { BpmnModel } from "./bpmn.model";
 
 @Injectable()
 export class BpmnService {
@@ -13,15 +14,13 @@ export class BpmnService {
 	private readonly logger = new Logger(BpmnService.name);
 	private readonly engines: Record<string, IEngine> = {};
 
-	constructor() {
+	constructor(
+		private bpmnModel: BpmnModel,
+	) {
 		this.init().then();
 	}
 
-	async init() {
-		if (Object.entries(this.engines).length)
-			return;
-
-		// ToDo: move to DB
+	async initEnginesFromFiles () {
 		const filePath = path.join(__dirname, "../../../bpmn-xml/account-balance.bpmn");
 		const source = getFileContent(filePath);
 		const engineName = "account-balance";
@@ -29,6 +28,24 @@ export class BpmnService {
 			name: "account-balance",
 			engine: this.getEngine({ name: engineName, source })
 		};
+	}
+
+	async initEnginesFromDB () {
+		const bpmns = await this.bpmnModel.getActiveBpmns();
+		bpmns.forEach(bpmn => {
+			this.engines[bpmn.name] = {
+				name: "account-balance",
+				engine: this.getEngine({ name: bpmn.name, source: bpmn.schema })
+			};
+		});
+	}
+
+	async init() {
+		if (Object.entries(this.engines).length)
+			return;
+
+		// await this.initFromFiles();
+		await this.initEnginesFromDB();
 	}
 
 	// async getEngine(options: BpmnEngineExecuteOptions) {
