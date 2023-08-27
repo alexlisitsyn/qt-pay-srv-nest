@@ -45,3 +45,31 @@ select setval('s_service_id_seq', 10);
 insert into s_service (name, role, token, uuid, key_file_path)
 values ('test api 1', 'api', 'test_token_1', uuid_generate_v4(), '/1/public_key.pem'),
        ('test api 2', 'api', 'test_token_2', uuid_generate_v4(), '/test/public_key.pem');
+
+
+insert into bpmn (name, schema, options, active, created_ts, updated_ts)
+values  ('account-balance', '<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions
+  id="testProcess"
+  targetNamespace="https://bpmn.io/schema/bpmn"
+  xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+>
+  <bpmn:process id="theProcess" isExecutable="true">
+    <bpmn:startEvent id="theStart"/>
+    <bpmn:serviceTask id="getBalance" implementation="${environment.services.runActivityById}" camunda:resultVariable="balance"/>
+    <bpmn:exclusiveGateway id="checkBalance" default="flow3"/>
+    <bpmn:serviceTask id="transferBalance" implementation="${environment.services.runActivityById}" camunda:resultVariable="transfer"/>
+    <bpmn:endEvent id="endSkip"/>
+    <bpmn:endEvent id="endProcess"/>
+
+    <bpmn:sequenceFlow id="flow1" sourceRef="theStart" targetRef="getBalance"/>
+    <bpmn:sequenceFlow id="flow2" sourceRef="getBalance" targetRef="checkBalance"/>
+    <bpmn:sequenceFlow id="flow3" sourceRef="checkBalance" targetRef="endSkip"/>
+    <bpmn:sequenceFlow id="flow4" sourceRef="checkBalance" targetRef="transferBalance">
+      <bpmn:conditionExpression>${environment.services.checkBalance(environment.variables.balance)}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="flow5" sourceRef="transferBalance" targetRef="endProcess"/>
+  </bpmn:process>
+</bpmn:definitions>', '{}', true, '2023-08-27 08:44:08.115093', null);
