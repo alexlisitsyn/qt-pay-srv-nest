@@ -8,6 +8,8 @@ import { PostService } from "./post.service";
 	exports: [PostService]
 })
 export class PostModule {
-	constructor(private postService: PostService) {
+	constructor(
+		private postService: PostService
+	) {
 	}
 }

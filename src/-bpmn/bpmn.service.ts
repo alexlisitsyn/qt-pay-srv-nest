@@ -1,14 +1,12 @@
-import * as path from "path";
-import {Injectable, Logger} from "@nestjs/common";
-import {Engine} from "bpmn-engine";
-import {EventEmitter} from "events";
-import {getFileContent} from "./file-helper";
-import {checkBalance, runActivityById} from "./bpmn-activity";
+import { Injectable, Logger } from "@nestjs/common";
+import { Engine } from "bpmn-engine";
+import { EventEmitter } from "events";
+import { checkBalance, runActivityById } from "../bpmn/bpmn-activity";
+import { BpmnModel } from "./bpmn-model";
+import { IEngine } from "./bpmn-interface";
 
-export interface IEngine {
-	name: string;
-	engine: any;
-}
+// import * as path from "path";
+// import { getFileContent } from "../common/file-helper";
 
 @Injectable()
 export class BpmnService {
@@ -16,22 +14,32 @@ export class BpmnService {
 	private readonly logger = new Logger(BpmnService.name);
 	private readonly engines: Record<string, IEngine> = {};
 
-	constructor() {
-		this.init().then();
+	constructor(
+		private bpmnModel: BpmnModel
+	) {
+		// this.init().then();
 	}
 
 	async init() {
 		if (Object.entries(this.engines).length)
 			return;
 
-		// ToDo: move to DB
-		const filePath = path.join(__dirname, "../../bpmn-xml/account-balance.bpmn");
-		const source = getFileContent(filePath);
-		const engineName = "account-balance";
-		this.engines[engineName] = {
-			name: "account-balance",
-			engine: this.getEngine({name: engineName, source})
-		};
+		const bpmns = await this.bpmnModel.getActiveBpmns();
+		bpmns.forEach(bpmn => {
+			this.engines[bpmn.name] = {
+				name: "account-balance",
+				engine: this.getEngine({ name: bpmn.name, source: bpmn.schema })
+			};
+		});
+
+		// // ToDo: move to DB
+		// const filePath = path.join(__dirname, "../../bpmn-xml/account-balance.bpmn");
+		// const source = getFileContent(filePath);
+		// const engineName = "account-balance";
+		// this.engines[engineName] = {
+		// 	name: "account-balance",
+		// 	engine: this.getEngine({name: engineName, source})
+		// };
 	}
 
 	// async getEngine(options: BpmnEngineExecuteOptions) {
@@ -48,7 +56,7 @@ export class BpmnService {
 					if (!activity.behaviour.resultVariable)
 						return;
 
-					activity.on("end", ({environment, content}) => {
+					activity.on("end", ({ environment, content }) => {
 						// console.log('!!! activity on end:', activity.id);
 						environment.output[activity.behaviour.resultVariable] = content.output[0];
 						// environment.variables[activity.behaviour.resultVariable] = content.output[0];
@@ -112,8 +120,4 @@ export class BpmnService {
 			output: execRes?.environment?.output
 		};
 	}
-
-
 }
-
-export default new BpmnService();

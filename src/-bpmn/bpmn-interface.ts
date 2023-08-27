@@ -16,3 +16,8 @@ export interface IBpmn {
 	created_ts: Date;
 	updated_ts: Date;
 }
+
+export interface IEngine {
+	name: string;
+	engine: any;
+}

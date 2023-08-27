@@ -14,17 +14,11 @@ export class DevController {
 	) {
 	}
 
-	@Post("tmp")
-	@HttpCode(200)
-	async runTmp(@Body() params: IParams) {
-		return this.devService.tmp(params);
-	}
-
-	@Post("account-balance")
-	@HttpCode(200)
-	async runAccountBalance(@Body() params: IParams) {
-		return this.devService.runAccountBalance(params);
-	}
+	// @Post("tmp")
+	// @HttpCode(200)
+	// async runTmp(@Body() params: IParams) {
+	// 	return this.devService.tmp(params);
+	// }
 
 	@Post("bpmn-run")
 	@HttpCode(200)

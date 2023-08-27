@@ -1,4 +1,4 @@
-import {IBpmnActivity} from "../bpmn-interface";
+import {IBpmnActivity} from "../../-bpmn/bpmn-interface";
 
 export class TransferBalanceActivity implements IBpmnActivity {
 	async run(params: any) {

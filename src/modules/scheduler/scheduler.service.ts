@@ -47,7 +47,7 @@ export class SchedulerService {
 		const dbJob = await this.dbService.insertOne("s_job", {
 			task,
 			options: options ?? {},
-			cron_options: cronOptions,
+			cron_options: cronOptions
 		});
 
 		if (!dbJob.rowCount)
@@ -103,7 +103,7 @@ export class SchedulerService {
 		return res;
 	}
 
-	async initJobsFromDB () {
+	async initJobsFromDB() {
 		const dbJobs = await this.dbService.getAllData("s_job");
 
 		dbJobs.forEach(dbJob => {
@@ -114,9 +114,9 @@ export class SchedulerService {
 
 			this.schedulerRegistry.addCronJob(jobName, job);
 
-			if (dbJob.status !== 'hold')
+			if (dbJob.status !== "hold")
 				job.start();
-		})
+		});
 	}
 
 }

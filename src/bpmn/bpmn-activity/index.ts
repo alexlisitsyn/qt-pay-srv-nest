@@ -1,4 +1,4 @@
-import {IBpmnActivity} from "../bpmn-interface";
+import {IBpmnActivity} from "../../-bpmn/bpmn-interface";
 import {GetBalanceActivity} from "./get-balance-activity";
 import {TransferBalanceActivity} from "./transfer-balance-activity";
 

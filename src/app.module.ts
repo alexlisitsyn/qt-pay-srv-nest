@@ -11,6 +11,8 @@ import { SchedulerModule } from "./modules/scheduler/scheduler.module";
 import { DbModule } from "./db/db.module";
 import { PayServiceModule } from "./modules/pay-service/pay-service.module";
 import { DevModule } from "./modules/dev/dev.module";
+import { BpmnModule } from './bpmn/bpmn.module';
+import { DevController } from './modules/dev/dev.controller';
 
 @Module({
 	imports: [
@@ -41,8 +43,9 @@ import { DevModule } from "./modules/dev/dev.module";
 		DevModule,
 		PostModule,
 		AudioModule,
+		BpmnModule
 	],
-	controllers: [AppController],
+	controllers: [AppController, DevController],
 	providers: [AppService]
 })
 export class AppModule {
