@@ -1,9 +1,8 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { BpmnService } from "../modules/bpmn/bpmn.service";
-// import bpmnService from "../-bpmn-old/bpmn-service";
 
 // import { EventEmitter } from "events";
-// import { engine as engine3 } from "../-bpmn-old/examples/example3";
+// import { engine } from "../-bpmn-old/examples/example3";
 // import { runActivityById, checkBalance } from "../-bpmn-old/bpmn-activity";
 
 @Injectable()
