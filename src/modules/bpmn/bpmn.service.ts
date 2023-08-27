@@ -5,8 +5,9 @@ import { Engine } from "bpmn-engine";
 
 import { getFileContent } from "../../common/file-helper";
 import { IEngine } from "./bpmn.interface";
-import { checkBalance, runActivityById } from "./bpmn-activity";
 import { BpmnModel } from "./bpmn.model";
+import { checkBalance, runActivityById } from "./bpmn-activity";
+import { buildListeners, onActivityEnd } from "./bpmn-listener";
 
 @Injectable()
 export class BpmnService {
@@ -35,7 +36,9 @@ export class BpmnService {
 		bpmns.forEach(bpmn => {
 			this.engines[bpmn.name] = {
 				name: "account-balance",
-				engine: this.getEngine({ name: bpmn.name, source: bpmn.schema })
+				engine: this.getEngine({ name: bpmn.name, source: bpmn.schema }),
+				variables: bpmn.options?.variables,
+				listeners: bpmn.options?.listeners
 			};
 		});
 	}
@@ -97,11 +100,10 @@ export class BpmnService {
 
 		const engine = this.engines[engineName];
 
-		const listener = new EventEmitter();
-		// ToDo: add listener from DB settings
+		const listener = await buildListeners(engine.listeners);
 
-		const variables: any = {};
 		// ToDo: add variables from DB settings
+		const variables: any = {};
 
 		const execOptions = {
 			listener,

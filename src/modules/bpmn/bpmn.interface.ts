@@ -1,6 +1,8 @@
 export interface IEngine {
 	name: string;
 	engine: any;
+	variables?: any;
+	listeners?: string[];
 }
 
 export interface IBpmnActivity {

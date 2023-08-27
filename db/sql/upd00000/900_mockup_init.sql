@@ -72,4 +72,4 @@ values  ('account-balance', '<?xml version="1.0" encoding="UTF-8"?>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="flow5" sourceRef="transferBalance" targetRef="endProcess"/>
   </bpmn:process>
-</bpmn:definitions>', '{}', true, '2023-08-27 08:44:08.115093', null);
+</bpmn:definitions>', '{"listeners":["activity.end"]}', true, '2023-08-27 08:44:08.115093', null);
