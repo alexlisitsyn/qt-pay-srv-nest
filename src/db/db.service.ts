@@ -7,11 +7,23 @@ export class DbService {
 
 	private readonly logger = new Logger(DbService.name);
 
-	constructor(@InjectClient() private readonly pool: Pool) {
+	constructor(
+		@InjectClient() private readonly pool: Pool
+	) {
 		require("pg").types.setTypeParser(1114, function(stringValue) {
 			return stringValue + "Z";
 		});
 	}
+
+	public async query(query: string, params: any = {}) {
+		try {
+			const dbRes = await this.pool.query(query, params);
+			return dbRes?.rows ?? [];
+		} catch (e) {
+			this.logger.error(e);
+			return [];
+		}
+	};
 
 	public async findAll(table: string, limit: number = 0, offset: number = 0, where: string = "") {
 		this.logger.warn(">> findAll ToDo !!");
