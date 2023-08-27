@@ -1,4 +1,5 @@
 import { Injectable, Logger } from "@nestjs/common";
+// import { BpmnService } from "../modules/bpmn/bpmn.service";
 import bpmnService from "../-bpmn-old/bpmn-service";
 
 // import { EventEmitter } from "events";
@@ -7,6 +8,11 @@ import bpmnService from "../-bpmn-old/bpmn-service";
 
 @Injectable()
 export class DevService {
+  constructor(
+    // private bpmnService: BpmnService
+  ) {
+  }
+
   private readonly logger = new Logger(DevService.name);
 
   // async tmp(params: any) {

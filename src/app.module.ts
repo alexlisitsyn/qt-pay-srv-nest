@@ -4,7 +4,7 @@ import { BullModule } from "@nestjs/bull";
 import { PostgresModule } from 'nest-postgres';
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
-import { PostModule } from "./modules/post/post.module";
+import { PostModule } from "./examples/post/post.module";
 import { AudioModule } from "./examples/audio/audio.module";
 import { TaskModule } from "./examples/task/task.module";
 import { SchedulerModule } from "./modules/scheduler/scheduler.module";
