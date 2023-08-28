@@ -106,10 +106,8 @@ export class SchedulerService {
 	}
 
 	async initJobsFromDB () {
+		let startedCnt = 0;
 		const dbJobs = await this.dbService.getAllData("s_job");
-
-		this.logger.log(`initJobsFromDB, count: ${dbJobs.length}`);
-
 		dbJobs.forEach(dbJob => {
 			const jobName = `job-${dbJob.id}`;
 
@@ -121,9 +119,12 @@ export class SchedulerService {
 
 			this.schedulerRegistry.addCronJob(jobName, job);
 
-			if (dbJob.status !== 'hold')
+			if (dbJob.status !== 'hold') {
 				job.start();
-		})
-	}
+				startedCnt++;
+			}
+		});
 
+		this.logger.log(`initJobsFromDB, count: ${dbJobs.length}, started: ${startedCnt}`);
+	}
 }

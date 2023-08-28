@@ -92,8 +92,6 @@ export class BpmnService {
 
 		this.logger.log(`--- BpmnService execEngineByName START: ${engineName}, ${JSON.stringify(runtimeVariables)} `);
 
-		// ToDo: get engine settings from db
-
 		if (!this.engines[engineName]) {
 			console.error(`Unknown activity: ${engineName}`);
 			return false;

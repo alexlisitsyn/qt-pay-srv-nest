@@ -8,6 +8,7 @@ export class BinancePayService implements IPayService {
 
 	getBalance(...args: any): null | any {
 		// this.logger.log('getBalance', JSON.stringify(args));
-		return 123;
+		console.log('> BinancePayService > getBalance > args:', args);
+		return 1234;
 	}
 }

@@ -5,6 +5,8 @@ import { EventEmitter } from "events";
 export class BpmnListenerHelper {
 	private readonly logger = new Logger(BpmnListenerHelper.name);
 
+	// ToDo: refactor
+
 	onActivityEnd = (elementApi) => {
 		// console.log(">>> activity.end elementApi.id:", elementApi.id);
 

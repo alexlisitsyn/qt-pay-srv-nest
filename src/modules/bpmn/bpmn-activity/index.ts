@@ -30,8 +30,10 @@ class BpmnActivityHelper {
 }
 
 // ToDo: сделать в формате runActivityById
-function checkBalance(cmp) {
-  return cmp > 5000;
+//  перенести в проверку параметров переменные окружения
+function checkBalance(balance, balanceLimit) {
+  console.log('> checkBalance > balance, balanceLimit:', balance, balanceLimit);
+  return balance > balanceLimit;
 }
 
 async function runActivityById(scope, callback) {
