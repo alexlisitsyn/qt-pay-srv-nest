@@ -1,5 +1,6 @@
 create table s_job (
   id                bigserial primary key,
+  name              text      not null,
   task              text      not null,
   options           json      null     default '{}'::json,
   cron_options      json      not null,

@@ -46,6 +46,9 @@ insert into s_service (name, role, token, uuid, key_file_path)
 values ('test api 1', 'api', 'test_token_1', uuid_generate_v4(), '/1/public_key.pem'),
        ('test api 2', 'api', 'test_token_2', uuid_generate_v4(), '/test/public_key.pem');
 
+insert into postgres.s_job (name, task, options, cron_options, status, description, last_execution_ts, created_ts, updated_ts)
+values  ('binance-account-balance', 'account-balance', '{"provider": "binance", "balanceLimit": 5000}', '{"seconds":0}', 'not_hold', null, null, '2023-08-27 21:34:54.954834', null);
+
 
 insert into bpmn (name, schema, options, active, created_ts, updated_ts)
 values  ('account-balance', '<?xml version="1.0" encoding="UTF-8"?>

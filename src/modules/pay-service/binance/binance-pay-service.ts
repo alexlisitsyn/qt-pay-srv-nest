@@ -1,4 +1,4 @@
-import { IPayService } from "../pay-service-interface";
+import { IPayService } from "../pay-service.interface";
 import { Injectable, Logger } from "@nestjs/common";
 
 @Injectable()

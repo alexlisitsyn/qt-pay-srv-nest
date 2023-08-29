@@ -1,13 +1,13 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { IBpmnActivity } from "../bpmn.interface";
-import { PayService } from "../../pay-service/pay-service-interface";
+import { PayServiceInterface } from "../../pay-service/pay-service.interface";
 
 @Injectable()
 class GetBalanceActivity implements IBpmnActivity {
 	private readonly logger = new Logger(GetBalanceActivity.name);
 
 	constructor(
-		private payService: PayService
+		private payServiceInterface: PayServiceInterface
 	) {
 	}
 
@@ -33,7 +33,7 @@ class GetBalanceActivity implements IBpmnActivity {
 			return false;
 		}
 
-		const balance = await this.payService.getBalance(provider);
+		const balance = await this.payServiceInterface.getBalance(provider);
 		params.environment.output.balance = balance;
 		return balance;
 	}

@@ -4,14 +4,19 @@ import {GetBalanceActivity} from "./get-balance-activity";
 import {TransferBalanceActivity} from "./transfer-balance-activity";
 
 @Injectable()
-class BpmnActivityHelper {
+export class BpmnActivityHelper {
   private readonly logger = new Logger(BpmnActivityHelper.name);
 
   activities: Record<string, IBpmnActivity> = {};
 
-  constructor() {
-    this.use("getBalance", new GetBalanceActivity());
-    this.use("transferBalance", new TransferBalanceActivity());
+  constructor(
+    private getBalanceActivity: GetBalanceActivity,
+    private transferBalanceActivity: TransferBalanceActivity
+  ) {
+    // this.use("getBalance", new GetBalanceActivity());
+    // this.use("transferBalance", new TransferBalanceActivity());
+    this.use("getBalance", this.getBalanceActivity);
+    this.use("transferBalance", this.transferBalanceActivity);
   }
 
   use(name: string, activity: IBpmnActivity) {

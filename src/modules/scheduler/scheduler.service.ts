@@ -114,7 +114,7 @@ export class SchedulerService {
 			const job = new CronJob(`${dbJob.cron_options.seconds} * * * * *`, () => {
 				this.logger.log(`time (${dbJob.cron_options.seconds}) for job task ${jobName} to run!`);
 
-				this.bpmnService.execEngineByName(dbJob.task);
+				this.bpmnService.execEngineByName(dbJob.task, dbJob.options);
 			});
 
 			this.schedulerRegistry.addCronJob(jobName, job);

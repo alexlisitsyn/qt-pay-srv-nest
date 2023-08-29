@@ -5,8 +5,8 @@ export interface IPayService {
 }
 
 @Injectable()
-export class PayService {
-	private readonly logger = new Logger(PayService.name);
+export class PayServiceInterface {
+	private readonly logger = new Logger(PayServiceInterface.name);
 
 	payServices: Record<string, IPayService> = {};
 
@@ -40,4 +40,4 @@ export class PayService {
 
 }
 
-export default new PayService();
+export default new PayServiceInterface();
