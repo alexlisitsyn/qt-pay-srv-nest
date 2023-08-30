@@ -1,13 +1,12 @@
 import { Injectable, Logger } from "@nestjs/common";
-import { PayServiceInterface } from "./pay-service.interface";
-import { IParams } from "./pay-service.controller";
+import { payServiceInterface } from "./pay-service.interface";
 import { BinancePayService } from "./binance/binance-pay-service";
 import { HuobiPayService } from "./huobi/huobi-pay-service";
 
 @Injectable()
 export class PayServiceService {
 	private readonly logger = new Logger(PayServiceService.name);
-	private paySrv = new PayServiceInterface();
+	private paySrv = payServiceInterface;
 
 	async initModules() {
 		this.logger.log(">>> PayServiceService > initModules");
@@ -17,11 +16,10 @@ export class PayServiceService {
 		this.paySrv.use("huobi", new HuobiPayService());
 	}
 
-	async getBalance(params: IParams) {
-		this.logger.log("getBalance", params);
-
-		return this.paySrv.getBalance(params.name);
+	async getBalance(name: string) {
+		this.logger.log("getBalance > name:", name);
+		return payServiceInterface.getBalance(name);
 	}
 }
 
-export default new PayServiceInterface();
+export const payServiceService = new PayServiceService();

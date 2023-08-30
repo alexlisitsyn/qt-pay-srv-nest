@@ -1,44 +1,29 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { IBpmnActivity } from "../bpmn.interface";
-import { PayServiceInterface } from "../../pay-service/pay-service.interface";
+import {payServiceService} from '../../pay-service/pay-service.service';
 
-@Injectable()
-class GetBalanceActivity implements IBpmnActivity {
-	private readonly logger = new Logger(GetBalanceActivity.name);
+export async function getBalanceActivity(params: any) {
+	console.log("run activity getBalanceActivity");
 
-	constructor(
-		private payServiceInterface: PayServiceInterface
-	) {
+	const scope = params[0];
+
+	// clear output values from previous start
+	if (scope?.environment?.output) {
+		scope.environment.output.transfer = false;
+		scope.environment.output.balance = null;
 	}
 
-
-	async run(params: any) {
-		console.log("run activity getBalance");
-		// this.logger.log("run activity getBalance");
-
-		// clear output values from previous start
-		if (params?.environment?.output) {
-			params.environment.output.transfer = false;
-			params.environment.output.balance = null;
-		}
-
-		const {provider, balanceLimit} = params?.environment?.variables;
-		if (provider != 'binance') {
-			console.warn('GetBalanceActivity: unknown provider');
-			return false;
-		}
-
-		if (!balanceLimit) {
-			console.warn('GetBalanceActivity: incorrect balanceLimit settings');
-			return false;
-		}
-
-		const balance = await this.payServiceInterface.getBalance(provider);
-		params.environment.output.balance = balance;
-		return balance;
+	const {provider, balanceLimit} = scope?.environment?.variables;
+	if (provider != 'binance') {
+		console.warn('GetBalanceActivity: unknown provider');
+		return false;
 	}
+
+	if (!balanceLimit) {
+		console.warn('GetBalanceActivity: incorrect balanceLimit settings');
+		return false;
+	}
+
+	//const balance = 1234;
+	const balance = await payServiceService.getBalance(provider);
+	scope.environment.output.balance = balance;
+	return balance;
 }
-
-export {
-	GetBalanceActivity
-};

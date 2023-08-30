@@ -20,6 +20,6 @@ export class PayServiceController {
 
 	@Post("balance")
 	async getBalance(@Body() params: IParams) {
-		return this.payServiceService.getBalance(params);
+		return this.payServiceService.getBalance(params.name);
 	}
 }

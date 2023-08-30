@@ -46,7 +46,7 @@ insert into s_service (name, role, token, uuid, key_file_path)
 values ('test api 1', 'api', 'test_token_1', uuid_generate_v4(), '/1/public_key.pem'),
        ('test api 2', 'api', 'test_token_2', uuid_generate_v4(), '/test/public_key.pem');
 
-insert into postgres.s_job (name, task, options, cron_options, status, description, last_execution_ts, created_ts, updated_ts)
+insert into s_job (name, task, options, cron_options, status, description, last_execution_ts, created_ts, updated_ts)
 values  ('binance-account-balance', 'account-balance', '{"provider": "binance", "balanceLimit": 5000}', '{"seconds":0}', 'not_hold', null, null, '2023-08-27 21:34:54.954834', null);
 
 
@@ -71,8 +71,9 @@ values  ('account-balance', '<?xml version="1.0" encoding="UTF-8"?>
     <bpmn:sequenceFlow id="flow2" sourceRef="getBalance" targetRef="checkBalance"/>
     <bpmn:sequenceFlow id="flow3" sourceRef="checkBalance" targetRef="endSkip"/>
     <bpmn:sequenceFlow id="flow4" sourceRef="checkBalance" targetRef="transferBalance">
-      <bpmn:conditionExpression>${environment.services.checkBalance(environment.variables.balance)}</bpmn:conditionExpression>
+      <bpmn:conditionExpression>${environment.services.checkBalance(environment.output.balance, environment.variables.balanceLimit)}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="flow5" sourceRef="transferBalance" targetRef="endProcess"/>
   </bpmn:process>
-</bpmn:definitions>', '{"listeners":["activity.end"]}', true, '2023-08-27 08:44:08.115093', null);
+</bpmn:definitions>
+', '{"listeners":["activity.end"]}', true, '2023-08-27 08:44:08.115093', null);

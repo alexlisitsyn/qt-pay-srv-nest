@@ -119,7 +119,7 @@ export class SchedulerService {
 
 			this.schedulerRegistry.addCronJob(jobName, job);
 
-			if (dbJob.status !== 'hold') {
+			if (dbJob.status === 'active') {
 				job.start();
 				startedCnt++;
 			}

@@ -1,42 +1,7 @@
 import { Injectable, Logger } from "@nestjs/common";
 import {IBpmnActivity} from "../bpmn.interface";
-import {GetBalanceActivity} from "./get-balance-activity";
-import {TransferBalanceActivity} from "./transfer-balance-activity";
-
-
-
-
-async function getBalanceActivity(params: any) {
-  console.log("run activity getBalanceActivity");
-
-  const scope = params[0];
-
-  // clear output values from previous start
-  if (scope?.environment?.output) {
-    scope.environment.output.transfer = false;
-    scope.environment.output.balance = null;
-  }
-
-  const {provider, balanceLimit} = scope?.environment?.variables;
-  if (provider != 'binance') {
-    console.warn('GetBalanceActivity: unknown provider');
-    return false;
-  }
-
-  if (!balanceLimit) {
-    console.warn('GetBalanceActivity: incorrect balanceLimit settings');
-    return false;
-  }
-
-  const balance = 1234;
-  scope.environment.output.balance = balance;
-  return balance;
-}
-
-async function transferBalanceActivity(params: any) {
-  console.log("run activity transferBalance");
-  return true;
-}
+import {getBalanceActivity} from "./get-balance-activity";
+import {transferBalanceActivity} from "./transfer-balance-activity";
 
 
 @Injectable()
@@ -52,10 +17,10 @@ export class BpmnActivityHelper {
   ) {
     // this.use("getBalance", new GetBalanceActivity());
     // this.use("transferBalance", new TransferBalanceActivity());
-    this.use("getBalance", getBalanceActivity);
-    this.use("transferBalance", transferBalanceActivity);
     // this.use("getBalance", this.getBalanceActivity);
     // this.use("transferBalance", this.transferBalanceActivity);
+    this.use("getBalance", getBalanceActivity);
+    this.use("transferBalance", transferBalanceActivity);
   }
 
   // use(name: string, activity: IBpmnActivity) {
@@ -64,7 +29,6 @@ export class BpmnActivityHelper {
   use(name: string, activity: any) {
     this.activities[name] = activity;
   }
-
 
   run(name: string, params: any) {
     if (!this.activities[name]) {

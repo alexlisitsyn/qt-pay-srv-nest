@@ -40,4 +40,4 @@ export class PayServiceInterface {
 
 }
 
-export default new PayServiceInterface();
+export const payServiceInterface = new PayServiceInterface();

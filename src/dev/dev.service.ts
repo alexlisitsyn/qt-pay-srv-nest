@@ -50,7 +50,7 @@ export class DevService {
   // }
 
   async bpmnRun(params: any) {
-    return await this.bpmnService.execEngineByName(params.name as string, params.variables);
+    return await this.bpmnService.execEngineByName(params.task as string, params.options);
   }
 
 }
