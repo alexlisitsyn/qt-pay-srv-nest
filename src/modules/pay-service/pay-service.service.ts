@@ -1,5 +1,5 @@
 import { Injectable, Logger } from "@nestjs/common";
-import { payServiceInterface } from "./pay-service.interface";
+import { payServiceInterface } from "./pay-service-strategy";
 import { BinancePayService } from "./binance/binance-pay-service";
 import { HuobiPayService } from "./huobi/huobi-pay-service";
 
