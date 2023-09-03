@@ -8,8 +8,8 @@ import { PayServiceService } from './pay-service.service';
 })
 export class PayServiceModule {
   constructor(
-    private payServiceService: PayServiceService
+    // private payServiceService: PayServiceService
   ) {
-    payServiceService.initModules().then();
+    // payServiceService.initModules().then();
   }
 }

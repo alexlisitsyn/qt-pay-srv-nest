@@ -23,6 +23,7 @@
     "db:clean": "cross-env RUN_TASK=clean node db/app.js"
   },
   "dependencies": {
+    "@binance/connector": "^3.0.0-rc.2",
     "@nestjs/bull": "10.0.1",
     "@nestjs/common": "10.0.0",
     "@nestjs/config": "3.0.0",
@@ -34,6 +35,7 @@
     "bull": "4.10.4",
     "camunda-bpmn-moddle": "^7.0.1",
     "fs": "0.0.1-security",
+    "joi": "^17.10.1",
     "nest-postgres": "^0.0.8",
     "pg": "8.11.1",
     "pg-promise": "11.5.2",

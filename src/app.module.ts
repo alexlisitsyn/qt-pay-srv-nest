@@ -9,16 +9,23 @@ import { AudioModule } from "./examples/audio/audio.module";
 import { TaskModule } from "./examples/task/task.module";
 import { SchedulerModule } from "./modules/scheduler/scheduler.module";
 import { DbModule } from "./db/db.module";
-import { PayServiceModule } from "./modules/pay-service/pay-service.module";
 import { DevModule } from "./dev/dev.module";
 import { BpmnModule } from "./modules/bpmn/bpmn.module";
+import { validationSchema } from "./common/config";
+import { PayServiceModule } from "./modules/pay-service/pay-service.module";
+import { BinancePayServiceModule } from "./modules/pay-service/binance/binance-pay-service.module";
 
 @Module({
 	imports: [
 		ConfigModule.forRoot({
 			isGlobal: true,
-			envFilePath: [".env.local", ".env"]
+			envFilePath: [".env.local", ".env"],
 			// ignoreEnvFile: true,
+			validationSchema: validationSchema,
+			validationOptions: {
+				allowUnknown: true,
+				abortEarly: true,
+			},
 		}),
 		BullModule.forRoot(
 			// 'alternative-config',
@@ -38,11 +45,12 @@ import { BpmnModule } from "./modules/bpmn/bpmn.module";
 		DbModule,
 		SchedulerModule,
 		TaskModule,
-		PayServiceModule,
 		DevModule,
 		PostModule,
 		AudioModule,
-		BpmnModule
+		BpmnModule,
+		PayServiceModule,
+		BinancePayServiceModule
 	],
 	controllers: [AppController],
 	providers: [AppService]

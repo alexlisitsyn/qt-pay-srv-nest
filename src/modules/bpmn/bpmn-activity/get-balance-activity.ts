@@ -1,6 +1,6 @@
 import {payServiceService} from '../../pay-service/pay-service.service';
 
-export async function getBalanceActivity(params: any) {
+export const getBalanceActivity = async (params: any) => {
 	console.log("run activity getBalanceActivity");
 
 	const scope = params[0];

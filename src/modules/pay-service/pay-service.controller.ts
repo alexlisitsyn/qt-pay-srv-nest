@@ -3,8 +3,8 @@ import { ApiTags } from "@nestjs/swagger";
 import { PayServiceService } from "./pay-service.service";
 
 export interface IParams {
-	name: string;
-	method: string;
+	provider: string;
+	method?: string;
 }
 
 @ApiTags("pay-service")
@@ -20,6 +20,6 @@ export class PayServiceController {
 
 	@Post("balance")
 	async getBalance(@Body() params: IParams) {
-		return this.payServiceService.getBalance(params.name);
+		return this.payServiceService.getBalance(params);
 	}
 }
