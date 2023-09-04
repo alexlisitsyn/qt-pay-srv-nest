@@ -5,7 +5,7 @@ import { Engine } from "bpmn-engine";
 import { getFileContent } from "../../common/file-helper";
 import { IEngine } from "./bpmn.interface";
 import { BpmnModel } from "./bpmn.model";
-import { checkBalance, runActivityById } from "./bpmn-activity";
+import { cmpFirstBigger, runActivityById } from "./bpmn-activity";
 import { BpmnListenerHelper } from "./bpmn-listener";
 
 @Injectable()
@@ -112,7 +112,7 @@ export class BpmnService {
 			},
 			services: {
 				runActivityById,
-				checkBalance
+				cmpFirstBigger
 			}
 		};
 

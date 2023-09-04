@@ -1,5 +1,4 @@
 import { Injectable, Logger } from "@nestjs/common";
-// import { payServiceStrategy } from "./pay-service-strategy";
 import { binancePayService } from "./binance/binance-pay-service";
 import { huobiPayService } from "./huobi/huobi-pay-service";
 import { IPayService } from "./pay-service.interface";
@@ -8,8 +7,6 @@ import { IParams } from "./pay-service.controller";
 @Injectable()
 export class PayServiceService {
   private readonly logger = new Logger(PayServiceService.name);
-  // private paySrv = payServiceStrategy;
-
   private readonly payServices: Record<string, IPayService> = {};
 
   constructor() {
@@ -28,17 +25,13 @@ export class PayServiceService {
     this.use("huobi", huobiPayService);
   }
 
-  // async getBalance(name: string) {
-  // 	this.logger.log("getBalance > name:", name);
-  // 	return payServiceStrategy.getBalance(name);
-  // }
-  async getBalance(params: IParams) {
-    if (!this.payServices[params.provider]) {
+  async getBalance(provider: string, params: any = {}) {
+    if (!this.payServices[provider]) {
       this.logger.error(`Платежный сервис ${params.provider} не активен`);
       return null;
     }
 
-    return await this.payServices[params.provider].getBalance.call(this.payServices[params.provider], params);
+    return await this.payServices[provider].getBalance.call(this.payServices[provider], params);
   }
 
   // ToDo:

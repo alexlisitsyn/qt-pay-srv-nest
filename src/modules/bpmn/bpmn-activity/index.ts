@@ -43,11 +43,9 @@ export class BpmnActivityHelper {
   }
 }
 
-// ToDo: сделать в формате runActivityById
-//  перенести в проверку параметров переменные окружения
-function checkBalance(balance, balanceLimit) {
-  console.log('> checkBalance > balance, balanceLimit:', balance, balanceLimit);
-  return balance > balanceLimit;
+function cmpFirstBigger(first, second) {
+  console.log('> cmpFirstBigger > first, second:', first, second);
+  return first > second;
 }
 
 async function runActivityById(scope, callback) {
@@ -66,5 +64,5 @@ async function runActivityById(scope, callback) {
 export {
   IBpmnActivity,
   runActivityById,
-  checkBalance
+  cmpFirstBigger
 }

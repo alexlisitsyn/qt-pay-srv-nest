@@ -71,7 +71,7 @@ values  ('account-balance', '<?xml version="1.0" encoding="UTF-8"?>
     <bpmn:sequenceFlow id="flow2" sourceRef="getBalance" targetRef="checkBalance"/>
     <bpmn:sequenceFlow id="flow3" sourceRef="checkBalance" targetRef="endSkip"/>
     <bpmn:sequenceFlow id="flow4" sourceRef="checkBalance" targetRef="transferBalance">
-      <bpmn:conditionExpression>${environment.services.checkBalance(environment.output.balance, environment.variables.balanceLimit)}</bpmn:conditionExpression>
+      <bpmn:conditionExpression>${environment.services.cmpFirstBigger(environment.output.balance, environment.variables.balanceLimit)}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="flow5" sourceRef="transferBalance" targetRef="endProcess"/>
   </bpmn:process>

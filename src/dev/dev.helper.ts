@@ -1,8 +1,3 @@
-// export const getRequest = async () => {
-//   console.log("Dev Helper > getRequest");
-//
-//   return Promise.resolve({balance: 1245})
-// }
 
 export async function getBalance(scope, callback) {
   let result;
@@ -31,8 +26,4 @@ export async function transferBalance(scope, callback) {
   }
 
   return callback(null, result);
-}
-
-export const checkBalance = (cmp) => {
-  return cmp > 5000;
 }

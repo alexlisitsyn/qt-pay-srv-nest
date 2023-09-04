@@ -13,8 +13,9 @@ export class BinancePayService implements IPayService {
 	async getBalance(params: any): Promise<null | any> {
 		this.logger.log('> BinancePayService > getBalance > params:');
 
-		const res = await binanceService.getSubAccountSpotSummary();
-		this.logger.log('> BinancePayService > getSubAccountSpotSummary > res:', res);
+		// ToDo: UnRem after correct credentials
+		// const res = await binanceService.getSubAccountSpotSummary();
+		// this.logger.log('> BinancePayService > getSubAccountSpotSummary > res:', res);
 
 		return 4567;
 	}
