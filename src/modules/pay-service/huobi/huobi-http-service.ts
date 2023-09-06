@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
+import HmacSHA256 from "crypto-js/hmac-sha256";
+import encodeBase64 from "crypto-js/enc-base64";
 
-const JSONbig = require('json-bigint');
-import HmacSHA256 from 'crypto-js/hmac-sha256';
-import encodeBase64 from 'crypto-js/enc-base64';
-
-import http from './httpClient';
+import http from "./httpClient";
 import moment from "moment";
+
+const JsonBigint = require('json-bigint');
 
 const DEFAULT_HEADERS = {
   "Content-Type": "application/json",
@@ -44,21 +44,34 @@ export class HuobiHttpService {
 
 
   async call_get(tip, path){
-    http.get(path, {
-      timeout: 1000,
-      headers: DEFAULT_HEADERS
-    }).then(data => {
-      let json = JSONbig.parse(data);
-      if (json.status == 'ok') {
-        var outputStr = tip + "......" + path + "\r\n";
-        Array.isArray(json.data) ? json.data.forEach(e=>{outputStr += JSONbig.stringify(e)+'\r\n'}): outputStr+=JSONbig.stringify(json);
-        console.log(outputStr);
-      } else {
-        console.log('ошибка вызова', tip, "......",  path, "......", json.data ?? data);
-      }
-    }).catch(ex => {
-      console.error('GET', path, 'аномальный', ex, tip, '......', path, "  Заканчивать\r\n");
-    });
+    // http.get(path, {
+    //   timeout: 1000,
+    //   headers: DEFAULT_HEADERS
+    // }).then(data => {
+    //   let json = JsonBigint.parse(data);
+    //   if (json.status == 'ok') {
+    //     // var outputStr = tip + "......" + path + "\r\n";
+    //     // Array.isArray(json.data) ? json.data.forEach(e=>{outputStr += JsonBigint.stringify(e)+'\r\n'}): outputStr+=JsonBigint.stringify(json);
+    //     // console.log(outputStr);
+    //     Promise.resolve(json.data);
+    //   } else {
+    //     console.log('ошибка вызова', tip, "......",  path, "......", json.data ?? data);
+    //     Promise.reject(null);
+    //   }
+    // }).catch(ex => {
+    //   console.error('GET', path, 'аномальный', ex, tip, '......', path, "  Заканчивать\r\n");
+    // });
+
+    try {
+      const qRes = await http.get(path, {
+        timeout: 1000,
+        headers: DEFAULT_HEADERS
+      });
+      const resJson = JsonBigint.parse(qRes as string);  // не обязательно, проверить
+      return resJson.data;
+    } catch (e) {
+      console.error('GET', path, 'аномальный', e, tip, '......', path, "  Заканчивать\r\n");
+    }
   }
 
   async call_post(tip, path, payload, body){
@@ -67,10 +80,10 @@ export class HuobiHttpService {
       timeout: 1000,
       headers: DEFAULT_HEADERS
     }).then(data => {
-      let json = JSONbig.parse(data);
+      let json = JsonBigint.parse(data);
       if (json.status == 'ok') {
         var outputStr = tip + "......" + path + "\r\n";
-        Array.isArray(json.data) ? json.data.forEach(e=>{outputStr += JSONbig.stringify(e)+'\r\n'}): outputStr+=JSONbig.stringify(json);
+        Array.isArray(json.data) ? json.data.forEach(e=>{outputStr += JsonBigint.stringify(e)+'\r\n'}): outputStr+=JsonBigint.stringify(json);
         console.log(outputStr);
       } else {
         console.log(tip + 'передача status'+ json.status, json, "\r\n", tip, '......', path, "  Заканчивать\r\n");

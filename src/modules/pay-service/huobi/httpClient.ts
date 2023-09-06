@@ -1,14 +1,12 @@
 const request = require("request");
 const logger = console;
 
-// const http = require("http");
-// const moment = require("moment");
 
-var default_post_headers = {
+const default_post_headers = {
   "content-type": "application/json;charset=utf-8"
 };
 
-var agentOptions = {
+const agentOptions = {
   keepAlive: true,
   maxSockets: 256
 };
@@ -17,7 +15,8 @@ const get = function(url, options) {
   // console.log(`${moment().format()} HttpGet: ${url}`)
   return new Promise((resolve, reject) => {
     options = options || {};
-    var httpOptions = {
+
+    const httpOptions = {
       url: url,
       method: "get",
       timeout: options.timeout || 3000,
@@ -25,6 +24,7 @@ const get = function(url, options) {
       proxy: options.proxy || "",
       agentOptions: agentOptions
     };
+
     request.get(httpOptions, function(err, res, body) {
       if (err) {
         reject(err);
@@ -43,7 +43,8 @@ const post = function(url, postdata, options) {
   // console.log(`${moment().format()} HttpPost: ${url}`)
   return new Promise((resolve, reject) => {
     options = options || {};
-    var httpOptions = {
+
+    const httpOptions = {
       url: url,
       body: JSON.stringify(postdata),
       method: "post",
@@ -52,6 +53,7 @@ const post = function(url, postdata, options) {
       proxy: options.proxy || "",
       agentOptions: agentOptions
     };
+
     request(httpOptions, function(err, res, body) {
       if (err) {
         reject(err);
@@ -70,7 +72,8 @@ const form_post = function(url, postdata, options) {
   // console.log(`${moment().format()} HttpFormPost: ${url}`)
   return new Promise((resolve, reject) => {
     options = options || {};
-    var httpOptions = {
+
+    const httpOptions = {
       url: url,
       form: postdata,
       method: "post",
@@ -79,6 +82,7 @@ const form_post = function(url, postdata, options) {
       proxy: options.proxy || "",
       agentOptions: agentOptions
     };
+
     request(httpOptions, function(err, res, body) {
       if (err) {
         reject(err);
