@@ -14,6 +14,7 @@ import { BpmnModule } from "./modules/bpmn/bpmn.module";
 import { validationSchema } from "./common/config";
 import { PayServiceModule } from "./modules/pay-service/pay-service.module";
 import { BinancePayServiceModule } from "./modules/pay-service/binance/binance-pay-service.module";
+import { HuobiPayServiceModule } from "./modules/pay-service/huobi/huobi-pay-service.module";
 
 @Module({
 	imports: [
@@ -45,12 +46,13 @@ import { BinancePayServiceModule } from "./modules/pay-service/binance/binance-p
 		DbModule,
 		SchedulerModule,
 		TaskModule,
-		DevModule,
 		PostModule,
 		AudioModule,
 		BpmnModule,
 		PayServiceModule,
-		BinancePayServiceModule
+		BinancePayServiceModule,
+		HuobiPayServiceModule,
+		DevModule,
 	],
 	controllers: [AppController],
 	providers: [AppService]

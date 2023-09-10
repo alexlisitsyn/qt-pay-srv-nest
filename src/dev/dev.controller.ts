@@ -3,6 +3,7 @@ import { ApiTags } from "@nestjs/swagger";
 import { IParams } from "../modules/pay-service/pay-service.controller";
 import { DevService } from "./dev.service";
 
+// import { HuobiService } from "../modules/pay-service/huobi/huobi-service";
 import { huobiService } from "../modules/pay-service/huobi/huobi-service";
 
 @ApiTags("dev")
@@ -12,18 +13,20 @@ import { huobiService } from "../modules/pay-service/huobi/huobi-service";
 })
 export class DevController {
 	constructor(
-		private devService: DevService
+		private devService: DevService,
+		// private huobiService: HuobiService
 	) {
 	}
 
 	@Post("bpmn-run")
 	@HttpCode(200)
 	async bpmnRun(@Body() params: IParams) {
-		return this.devService.bpmnRun(params);
+		return await this.devService.bpmnRun(params);
 	}
 
 	@Get("huobi-demo")
 	async huobiDemo() {
-		return huobiService.demo();
+		return await huobiService.demo();
+		// return null;
 	}
 }
