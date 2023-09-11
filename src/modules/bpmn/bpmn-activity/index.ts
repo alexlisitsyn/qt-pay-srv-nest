@@ -1,8 +1,7 @@
 import { Injectable, Logger } from "@nestjs/common";
-import {IBpmnActivity} from "../bpmn.interface";
+// import {IBpmnActivity} from "../bpmn.interface";
 import {getBalanceActivity} from "./get-balance-activity";
 import {transferBalanceActivity} from "./transfer-balance-activity";
-
 
 @Injectable()
 export class BpmnActivityHelper {
@@ -43,26 +42,8 @@ export class BpmnActivityHelper {
   }
 }
 
-function cmpFirstBigger(first, second) {
-  console.log('> cmpFirstBigger > first, second:', first, second);
-  return first > second;
-}
-
-async function runActivityById(scope, callback) {
-  let result: any;
-
-  try {
-    const activity = new BpmnActivityHelper();
-    result = await activity.run(scope.id, [scope]);
-  } catch (err) {
-    return callback(null, err);
-  }
-
-  return callback(null, result);
-}
-
-export {
-  IBpmnActivity,
-  runActivityById,
-  cmpFirstBigger
-}
+// export {
+//   IBpmnActivity,
+//   // runActivityById,
+//   // cmpFirstBigger
+// }

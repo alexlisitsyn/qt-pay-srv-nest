@@ -5,7 +5,8 @@ import { Engine } from "bpmn-engine";
 import { getFileContent } from "../../common/file-helper";
 import { IEngine } from "./bpmn.interface";
 import { BpmnModel } from "./bpmn.model";
-import { cmpFirstBigger, runActivityById } from "./bpmn-activity";
+// import { cmpFirstBigger, runActivityById } from "./bpmn-activity";
+import { BpmnActivityHelper } from "./bpmn-activity";
 import { BpmnListenerHelper } from "./bpmn-listener";
 
 @Injectable()
@@ -17,7 +18,7 @@ export class BpmnService {
 	private readonly bpmnListenerHelper = new BpmnListenerHelper();
 
 	constructor(
-		private bpmnModel: BpmnModel,
+		private bpmnModel: BpmnModel
 	) {
 		this.init().then();
 	}
@@ -88,6 +89,25 @@ export class BpmnService {
 		});
 	}
 
+
+	cmpFirstBigger(first, second) {
+		console.log('> cmpFirstBigger > first, second:', first, second);
+		return first > second;
+	}
+
+	async runActivityById(scope, callback) {
+		let result: any;
+
+		try {
+			const activityHelper = new BpmnActivityHelper();
+			result = await activityHelper.run(scope.id, [scope]);
+		} catch (err) {
+			return callback(null, err);
+		}
+
+		return callback(null, result);
+	}
+
 	async execEngineByName(engineName: string, runtimeVariables?: any) {
 
 		this.logger.log(`--- BpmnService execEngineByName START: ${engineName}, ${JSON.stringify(runtimeVariables)} `);
@@ -111,8 +131,8 @@ export class BpmnService {
 				...runtimeVariables
 			},
 			services: {
-				runActivityById,
-				cmpFirstBigger
+				runActivityById: this.runActivityById,
+				cmpFirstBigger: this.cmpFirstBigger
 			}
 		};
 
