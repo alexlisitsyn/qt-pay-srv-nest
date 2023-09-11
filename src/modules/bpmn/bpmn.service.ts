@@ -91,7 +91,7 @@ export class BpmnService {
 
 
 	cmpFirstBigger(first, second) {
-		console.log('> cmpFirstBigger > first, second:', first, second);
+		console.log('> cmpFirstBigger > first, second, res:', first, second, first > second);
 		return first > second;
 	}
 

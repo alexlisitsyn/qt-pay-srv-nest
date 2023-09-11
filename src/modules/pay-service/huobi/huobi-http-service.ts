@@ -16,8 +16,8 @@ export class HuobiHttpService {
 
   constructor() {
     const axiosConfig = {
-      // baseURL: HUOBI_BASE_URL,
-      baseURL: process.env.HUOBI_BASE_URL,
+      baseURL: HUOBI_BASE_URL,   // ToDo
+      // baseURL: process.env.HUOBI_BASE_URL, // ToDo
       headers: {
         "Content-Type": "application/json;charset=utf-8",
         "User-Agent": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36"

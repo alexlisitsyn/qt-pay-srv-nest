@@ -12,10 +12,10 @@ export const getBalanceActivity = async (params: any) => {
 	}
 
 	const {provider, balanceLimit} = scope?.environment?.variables;
-	if (provider != 'binance') {
-		console.warn('GetBalanceActivity: unknown provider');
-		return false;
-	}
+	// if (provider != 'binance') {
+	// 	console.warn('GetBalanceActivity: unknown provider');
+	// 	return false;
+	// }
 
 	if (!balanceLimit) {
 		console.warn('GetBalanceActivity: incorrect balanceLimit settings');

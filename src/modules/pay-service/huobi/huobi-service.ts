@@ -44,9 +44,9 @@ export class HuobiService {
     // return await this.getMarketTickers();
     // return await this.getAccountAccounts();
     // return await this.getAccountBalance('58574798');
-    // return await this.getAccountBalancePositive('58574798');
+    return await this.getAccountBalancePositive('58574798');
 
-    return await huobiHttpService.test();
+    // return await huobiHttpService.test();
   }
 }
 
